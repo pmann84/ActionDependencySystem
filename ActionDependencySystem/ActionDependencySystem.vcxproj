@@ -124,6 +124,8 @@
     <ClInclude Include="Actions\RunPowerShellScriptAction.h" />
     <ClInclude Include="BaseAction.h" />
     <ClInclude Include="Actions/CopyFileAction.h" />
+    <ClInclude Include="IAction.h" />
+    <ClInclude Include="IActionInput.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

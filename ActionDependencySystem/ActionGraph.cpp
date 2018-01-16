@@ -1,17 +1,17 @@
 #include "ActionGraph.h"
 
-ActionGraph::ActionGraph()
+BaseActionGraph::BaseActionGraph()
 {
 }
 
-void ActionGraph::run()
+void BaseActionGraph::run()
 {
 }
 
-void ActionGraph::add_action(BaseAction& action)
+void BaseActionGraph::add_action(IAction& action)
 {
 }
 
-void ActionGraph::add_connection(BaseAction& src, BaseAction& dst)
+void BaseActionGraph::add_connection(IAction& src, int output_idx, IAction& dst, int intput_idx)
 {
 }

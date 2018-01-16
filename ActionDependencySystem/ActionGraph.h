@@ -5,19 +5,21 @@
 
 #include "BaseAction.h"
 
-class ActionGraph : public BaseAction
+using ActionDagT = std::unordered_map<std::unique_ptr<IAction>, ActionListT>;
+
+class BaseActionGraph : public BaseAction
 {
 public:
-   ActionGraph();
-   ~ActionGraph() override = default;
+   BaseActionGraph();
+   ~BaseActionGraph() override = default;
 
    void run() override;
 
-   void add_action(BaseAction&);
-   void add_connection(BaseAction&, BaseAction&);
+   void add_action(IAction&);
+   void add_connection(IAction&, int, IAction&, int);
 
 private:
-   std::unordered_map<BaseAction, std::vector<BaseAction>> m_dag;
+   ActionDagT m_dag;
 };
 
 #endif // __ACTION_GRAPH_H__
