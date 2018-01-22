@@ -9,6 +9,7 @@ public:
    ActionInput(const std::string name) 
       : m_name(name)
       , m_is_initialised(false)
+      , m_optional(false)
    {
    }
    ~ActionInput() = default;
@@ -21,6 +22,16 @@ public:
    bool is_initialised() const override
    {
       return m_is_initialised;
+   }
+
+   bool is_optional() const override
+   {
+      return m_optional;
+   }
+
+   void set_optional(const bool optional) override
+   {
+      m_optional = optional;
    }
 
    void set(std::any value) override
@@ -38,6 +49,7 @@ private:
    std::string m_name;
    std::any m_value;
    bool m_is_initialised;
+   bool m_optional;
 };
 
 #endif // __IACTION_INPUT_H__

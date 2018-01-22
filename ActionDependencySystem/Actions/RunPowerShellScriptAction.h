@@ -8,6 +8,7 @@
 class RunPowershellScriptAction : public BaseAction
 {
 public:
+   RunPowershellScriptAction();
    RunPowershellScriptAction(std::string);
    ~RunPowershellScriptAction() = default;
 

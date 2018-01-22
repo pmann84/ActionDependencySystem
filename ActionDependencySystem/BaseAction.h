@@ -6,15 +6,24 @@
 class BaseAction : public IAction
 {
 public:
-   BaseAction() = default;
+   BaseAction();
    virtual ~BaseAction() = default;
 
-   void add_input(std::unique_ptr<IActionInput>) override;
-   void add_output(std::unique_ptr<IActionInput>) override;
+   std::string name() const override { return m_name; };
+   void name(std::string) override;
+
+   void add_input(std::shared_ptr<IActionInput>) override;
+   void add_output(std::shared_ptr<IActionInput>) override;
    
+   void set_input(int i, std::any value) override;
+   std::shared_ptr<IActionInput> get_output(const int i) override;
+
+   bool validate_inputs() override;
+
    virtual void run() = 0;
 
 protected:
+   std::string m_name;
    ActionInputListT m_inputs;
    ActionInputListT m_outputs;
 };

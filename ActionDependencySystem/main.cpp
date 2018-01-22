@@ -1,5 +1,3 @@
-#include "Actions/CopyFileAction.h"
-
 /* 
  * This class acts as the base for actions/graphs. In this frameworks, they are actually
  * the same thing, so actions can contain actions. So an action must store all its inputs
@@ -21,6 +19,7 @@
  *
  * Ways to store DAG in code:
  * Store as an adjency list - basically a map of actions to a list of actions that it is connected to (ahead of it)
+ * Need to consider how exactly to store connections between multiple inputs and outputs, not traditional dag structure?
  *
  * Iteration
  * Parallel - Need to write a parallelised executor to sort these actions
@@ -49,13 +48,34 @@
  * {
  *    return std::any_cast<Type>(m_value);
  * }
+ * 
+ * Graph
+ * Should do a topological sort to get the order in which to execute the actions
+ * For a local graph this doesnt matter too much as its all synchronous
+ * For parallel graphs we need to determine which actions can be executed in parallel
+ * 
  */
+
+#include "LocalActionGraph.h"
+#include "Actions/CopyFileAction.h"
+#include "Actions/RunPowerShellScriptAction.h"
 
 int main()
 {
-   const std::string in = "C:\\Users\\peterm\\PDM\\Documents\\Bug Details.txt";
-   const std::string out = "C:\\Users\\peterm\\PDM\\Documents\\Bug Details Copy.txt";
-   CopyFileAction action(in, out);
-   action.run();
+   const std::string in = "C:\\Users\\peterm\\powershell\\actionTest.ps1";
+   const std::string out = "C:\\Users\\peterm\\powershell\\actionScriptToRun.ps1";
+   std::shared_ptr<IAction> action = std::make_shared<CopyFileAction>(in, out);
+   action->name("CopyFileAction_1");
+
+   std::shared_ptr<IAction> runScriptAction = std::make_shared<RunPowershellScriptAction>();
+   runScriptAction->name("RunPowershellScriptAction_1");
+
+   LocalActionGraph graph;
+   graph.name("LocalActionGraph_1");
+   graph.add_action(action);
+   graph.add_action(runScriptAction);
+
+   graph.add_connection(action, 0, runScriptAction, 0);
+   graph.run();
    return 0;
 }

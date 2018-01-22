@@ -112,20 +112,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="ActionGraph.cpp" />
+    <ClCompile Include="BaseActionGraph.cpp" />
     <ClCompile Include="Actions\RunPowerShellScriptAction.cpp" />
     <ClCompile Include="BaseAction.cpp" />
     <ClCompile Include="Actions/CopyFileAction.cpp" />
+    <ClCompile Include="LocalActionGraph.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActionGraph.h" />
+    <ClInclude Include="ActionConnection.h" />
+    <ClInclude Include="BaseActionGraph.h" />
     <ClInclude Include="ActionInput.h" />
     <ClInclude Include="Actions\RunPowerShellScriptAction.h" />
     <ClInclude Include="BaseAction.h" />
     <ClInclude Include="Actions/CopyFileAction.h" />
     <ClInclude Include="IAction.h" />
     <ClInclude Include="IActionInput.h" />
+    <ClInclude Include="LocalActionGraph.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

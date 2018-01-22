@@ -8,6 +8,7 @@
 class CopyFileAction : public BaseAction
 {
 public:
+   CopyFileAction();
    CopyFileAction(std::string in, std::string out);
    ~CopyFileAction() final = default;
 

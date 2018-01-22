@@ -4,15 +4,20 @@
 #include <iostream>
 #include <sstream>
 
-RunPowershellScriptAction::RunPowershellScriptAction(std::string scriptPath)
+RunPowershellScriptAction::RunPowershellScriptAction()
 {
    // Add inputs
-   std::unique_ptr<IActionInput> scriptPathInput = std::make_unique<ActionInput>("Script File Path");
-   scriptPathInput->set(std::make_any<std::string>(scriptPath));
-   add_input(std::move(scriptPathInput));
+   std::shared_ptr<IActionInput> scriptPathInput = std::make_shared<ActionInput>("Script File Path");
+   add_input(scriptPathInput);
+
    // Add outputs
-   std::unique_ptr<IActionInput> scriptOutput = std::make_unique<ActionInput>("Script Output");
-   add_output(std::move(scriptOutput));
+   std::shared_ptr<IActionInput> scriptOutput = std::make_shared<ActionInput>("Script Output");
+   add_output(scriptOutput);
+}
+
+RunPowershellScriptAction::RunPowershellScriptAction(std::string scriptPath)
+{
+   set_input(0, std::make_any<std::string>(scriptPath));
 }
 
 void RunPowershellScriptAction::run()
