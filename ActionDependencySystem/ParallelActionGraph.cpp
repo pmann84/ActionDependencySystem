@@ -2,8 +2,15 @@
 
 #include "SortUtils.h"
 
+#include <thread>
 #include <stack>
 #include <iostream>
+
+ParallelActionGraph::ParallelActionGraph()
+{
+   unsigned long const hardware_threads = std::thread::hardware_concurrency();
+   m_max_threads = hardware_threads != 0 ? hardware_threads : 2;
+}
 
 void ParallelActionGraph::run()
 {
@@ -11,6 +18,7 @@ void ParallelActionGraph::run()
    std::stack<std::shared_ptr<IAction>> sorted_stack;
    SortUtils::topological_sort(m_dag, std::back_inserter(sorted_stack));
    // TODO - Keep a record of a list of ptrs to actions and associated threads -  so we can keep track of these
+   // std::map<std::shared_ptr<IAction>, std::thread>
    while(!sorted_stack.empty())
    {
       std::shared_ptr<IAction> action = sorted_stack.top();
