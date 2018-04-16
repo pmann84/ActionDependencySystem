@@ -9,7 +9,8 @@ class CopyFileAction : public BaseAction
 {
 public:
    CopyFileAction();
-   CopyFileAction(std::string in, std::string out);
+   CopyFileAction(std::string name);
+   CopyFileAction(std::string name, std::string in, std::string out);
    ~CopyFileAction() final = default;
 
    void run() override;

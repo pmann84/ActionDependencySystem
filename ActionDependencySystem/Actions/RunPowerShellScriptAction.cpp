@@ -7,11 +7,11 @@
 RunPowershellScriptAction::RunPowershellScriptAction()
 {
    // Add inputs
-   std::shared_ptr<IActionInput> scriptPathInput = std::make_shared<ActionInput>("Script File Path");
+   std::shared_ptr<ActionInput> scriptPathInput = std::make_shared<ActionInput>("Script File Path");
    add_input(scriptPathInput);
 
    // Add outputs
-   std::shared_ptr<IActionInput> scriptOutput = std::make_shared<ActionInput>("Script Output");
+   std::shared_ptr<ActionInput> scriptOutput = std::make_shared<ActionInput>("Script Output");
    add_output(scriptOutput);
 }
 

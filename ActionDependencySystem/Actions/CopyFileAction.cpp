@@ -10,19 +10,24 @@
 CopyFileAction::CopyFileAction()
 {
    // Add inputs
-   std::shared_ptr<IActionInput> inputFnInput = std::make_shared<ActionInput>("Input File Path");
+   std::shared_ptr<ActionInput> inputFnInput = std::make_shared<ActionInput>("Input File Path");
    add_input(inputFnInput);
 
-   std::shared_ptr<IActionInput> outputFnInput = std::make_shared<ActionInput>("Destination File Path");
+   std::shared_ptr<ActionInput> outputFnInput = std::make_shared<ActionInput>("Destination File Path");
    add_input(outputFnInput);
 
    // Add outputs
-   std::shared_ptr<IActionInput> copiedFnOutput = std::make_shared<ActionInput>("Copied File Path");
+   std::shared_ptr<ActionInput> copiedFnOutput = std::make_shared<ActionInput>("Copied File Path");
    add_output(copiedFnOutput);
 }
 
+CopyFileAction::CopyFileAction(std::string name) : CopyFileAction()
+{
+   BaseAction::name(name);
+}
+
 // Sets up the inputs then sets values for inputs
-CopyFileAction::CopyFileAction(std::string in, std::string out) : CopyFileAction()
+CopyFileAction::CopyFileAction(std::string name, std::string in, std::string out) : CopyFileAction(name)
 {
    set_input(0, std::make_any<std::string>(in));
    set_input(1, std::make_any<std::string>(out));
@@ -30,8 +35,8 @@ CopyFileAction::CopyFileAction(std::string in, std::string out) : CopyFileAction
 
 void CopyFileAction::run()
 {
-   const std::string output_file_name = std::any_cast<std::string>(m_inputs[1]->get());
-   const std::string input_file_name = std::any_cast<std::string>(m_inputs[0]->get());
+   const std::string output_file_name = m_inputs[1]->get<std::string>();
+   const std::string input_file_name = m_inputs[0]->get<std::string>();
 
    std::cout << "Copying " << input_file_name << " to " << output_file_name << std::endl;
 

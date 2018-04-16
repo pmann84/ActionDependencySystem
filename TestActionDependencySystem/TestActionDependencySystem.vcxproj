@@ -12,8 +12,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{FFAEA95E-538B-4854-8166-3972BCA3E609}</ProjectGuid>
-    <RootNamespace>ActionDependencySystem</RootNamespace>
+    <ProjectGuid>{B7D865CB-9FF7-455D-8D61-1C80641C0992}</ProjectGuid>
+    <RootNamespace>TestActionDependencySystem</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -37,9 +37,11 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="GoogleTestDebug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="GoogleTestRelease.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -65,29 +67,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Actions\DelayAction.cpp" />
-    <ClCompile Include="BaseActionGraph.cpp" />
-    <ClCompile Include="Actions\RunPowerShellScriptAction.cpp" />
-    <ClCompile Include="BaseAction.cpp" />
-    <ClCompile Include="Actions/CopyFileAction.cpp" />
-    <ClCompile Include="LocalActionGraph.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ParallelActionGraph.cpp" />
-    <ClCompile Include="SortUtils.cpp" />
+    <ClCompile Include="ActionTests.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActionConnection.h" />
-    <ClInclude Include="ActionExceptions.h" />
-    <ClInclude Include="Actions\DelayAction.h" />
-    <ClInclude Include="BaseActionGraph.h" />
-    <ClInclude Include="ActionInput.h" />
-    <ClInclude Include="Actions\RunPowerShellScriptAction.h" />
-    <ClInclude Include="BaseAction.h" />
-    <ClInclude Include="Actions/CopyFileAction.h" />
-    <ClInclude Include="IAction.h" />
-    <ClInclude Include="LocalActionGraph.h" />
-    <ClInclude Include="ParallelActionGraph.h" />
-    <ClInclude Include="SortUtils.h" />
+    <ProjectReference Include="..\ActionDependencySystem\ActionDependencySystem.vcxproj">
+      <Project>{ffaea95e-538b-4854-8166-3972bca3e609}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

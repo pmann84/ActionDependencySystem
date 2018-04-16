@@ -34,26 +34,23 @@
  * Graph
  * Actions are keyed off their names - can only have uniquely named actions/graphs so an unordered_map is fine
  * 
- * Actions
- * Make these so they have overriden methods to get set to a certain type
- * template<typename Type>
- * void set(Type value) override
- * {
- *    m_is_initialised = true;
- *    m_value = std::make_any<Type>(value);
- * }
- * 
- * template<typename Type>
- * Type get() const override
- * {
- *    return std::any_cast<Type>(m_value);
- * }
- * 
  * Graph
  * Should do a topological sort to get the order in which to execute the actions
  * For a local graph this doesnt matter too much as its all synchronous
  * For parallel graphs we need to determine which actions can be executed in parallel
  * 
+ * TODO: Implement serialisation to text file
+ *    This requires we have the serialise an action so that it has the * type, * name, * list of inputs, * list of outputs
+ * TODO: Implement command line interface to execute serialised graphs
+ * TODO: Add parallel graph execution
+ * TODO: Add action registration system
+ * TODO: Add graph ui
+ * TODO: Test with more actions and more complicated graphs
+ * TODO: Improve interface to the graph? so its more fluent 
+ * TODO: Implement ForEach action
+ * TODO: Add checks in add_connection (? maybe?) to check for loops in the graph!
+ * TODO: Need to add/test functionality to be able to add inputs and outputs to graphs
+ * TODO: Test nested graphs
  */
 
 #include "LocalActionGraph.h"
@@ -64,8 +61,7 @@ int main()
 {
    const std::string in = "C:\\Users\\peterm\\powershell\\actionTest.ps1";
    const std::string out = "C:\\Users\\peterm\\powershell\\actionScriptToRun.ps1";
-   std::shared_ptr<IAction> action = std::make_shared<CopyFileAction>(in, out);
-   action->name("CopyFileAction_1");
+   std::shared_ptr<IAction> action = std::make_shared<CopyFileAction>("CopyFileAction_1", in, out);
 
    std::shared_ptr<IAction> runScriptAction = std::make_shared<RunPowershellScriptAction>();
    runScriptAction->name("RunPowershellScriptAction_1");

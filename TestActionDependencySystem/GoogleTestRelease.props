@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <GTEST_INSTALL_DIR>C:\Googletest</GTEST_INSTALL_DIR>
+    <GOOGLETEST_DIR>$(GTEST_INSTALL_DIR)\googletest</GOOGLETEST_DIR>
+    <GOOGLEMOCK_DIR>$(GTEST_INSTALL_DIR)\googlemock</GOOGLEMOCK_DIR>
+    <GOOGLETEST_INCLUDE_DIR>$(GOOGLETEST_DIR)\include</GOOGLETEST_INCLUDE_DIR>
+    <GOOGLEMOCK_INCLUDE_DIR>$(GOOGLEMOCK_DIR)\include</GOOGLEMOCK_INCLUDE_DIR>
+  </PropertyGroup>
+  <PropertyGroup>
+    <IncludePath>$(GOOGLETEST_INCLUDE_DIR);$(GOOGLEMOCK_INCLUDE_DIR);$(IncludePath)</IncludePath>
+    <LibraryPath>$(GOOGLETEST_DIR)\msvc\gtest-md\Release;$(GOOGLEMOCK_DIR)\msvc\2015\Release;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <Link>
+      <AdditionalDependencies>gtest.lib;gtest_main-md.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <BuildMacro Include="GTEST_INSTALL_DIR">
+      <Value>$(GTEST_INSTALL_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GOOGLETEST_DIR">
+      <Value>$(GOOGLETEST_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GOOGLEMOCK_DIR">
+      <Value>$(GOOGLEMOCK_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GOOGLETEST_INCLUDE_DIR">
+      <Value>$(GOOGLETEST_INCLUDE_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+    <BuildMacro Include="GOOGLEMOCK_INCLUDE_DIR">
+      <Value>$(GOOGLEMOCK_INCLUDE_DIR)</Value>
+      <EnvironmentVariable>true</EnvironmentVariable>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
