@@ -4,21 +4,16 @@
 #include <sstream>
 #include <exception>
 
-class DuplicateActionException : public std::exception
+class DuplicateActionException : public std::runtime_error
 {
 public:
-   explicit DuplicateActionException(std::string name) : m_name(name) {}
+   explicit DuplicateActionException(const std::string name) : std::runtime_error("Cannot add action with name " + name + ". An action with this name already exists!") {}
+};
 
-private:
-   virtual const char* what() const throw()
-   {
-      std::stringstream ss;
-      ss << "Cannot add action with name " << m_name;
-      ss << ". An action with this name already exists!";
-      return ss.str().c_str();
-   }
-
-   std::string m_name;
+class SelfConnectionActionException : public std::runtime_error
+{
+public:
+   explicit SelfConnectionActionException(std::string action) : std::runtime_error("Cannot connect [" + action + "] action to itself.") {}
 };
 
 class InvalidActionInputsException : public std::exception
@@ -67,25 +62,6 @@ private:
    }
 
    std::vector<std::string> m_actions;
-};
-
-class SelfConnectionActionException : public std::exception
-{
-public:
-   explicit SelfConnectionActionException(std::string action)
-      : m_action(action)
-   {}
-
-private:
-   virtual const char* what() const throw()
-   {
-      std::stringstream excMsgStream;
-      excMsgStream << "Cannot connect ["; // The following action(s) do not exist![";
-      excMsgStream << m_action << "] action to itself.";
-      return excMsgStream.str().c_str();
-   }
-
-   std::string m_action;
 };
 
 #endif //__ACTION_EXCEPTIONS_H__
