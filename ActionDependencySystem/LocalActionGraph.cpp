@@ -5,16 +5,19 @@
 #include <stack>
 #include "ActionExceptions.h"
 #include "SortUtils.h"
+#include <iterator>
+#include <algorithm>
 
 void LocalActionGraph::run()
 {
    std::cout << "Executing graph [" << name() << "]" << std::endl;
-   std::stack<std::shared_ptr<IAction>> sorted_stack;
+   std::vector<std::shared_ptr<IAction>> sorted_stack;
    SortUtils::topological_sort(m_dag, std::back_inserter(sorted_stack));
+
    // Loop over the stack 
-   while (sorted_stack.empty() == false)
+   while (!sorted_stack.empty())
    {
-      std::shared_ptr<IAction> action = sorted_stack.top();
+      std::shared_ptr<IAction> action = sorted_stack.back();
       std::cout << "Executing action [" << action->name() << "]" << std::endl;
       // Check the action connections - only want inputs so we only care about the connections
       // where this is a dst action
@@ -39,7 +42,7 @@ void LocalActionGraph::run()
       action->run();
       std::cout << "Action [" << action->name() << "] executed successfully!" << std::endl;
       // Pop it off the stack
-      sorted_stack.pop();
+      sorted_stack.erase(sorted_stack.end()-1);
    }
    std::cout << "Graph [" << name() << "] executed successfully!" << std::endl;
 }

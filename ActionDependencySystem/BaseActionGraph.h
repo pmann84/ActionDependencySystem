@@ -19,8 +19,9 @@ public:
    virtual void run() = 0;
 
    void add_action(std::shared_ptr<IAction>);
+   void add_actions(std::vector<std::shared_ptr<IAction>>);
    void add_connection(std::shared_ptr<IAction>, int, std::shared_ptr<IAction>, int);
-
+   void propagate_outputs(std::shared_ptr<IAction>);
    int size() { return m_dag.size(); }
 
 protected:

@@ -2,6 +2,7 @@
 #define __BASE_ACTION_H__
 
 #include "IAction.h"
+#include "ActionConnection.h"
 
 class BaseAction : public IAction
 {
@@ -19,7 +20,12 @@ public:
    std::shared_ptr<ActionInput> get_output(const int i) override;
 
    bool validate_inputs() override;
+   bool validate_optional_inputs(std::vector<ActionConnection>) override;
+
    std::vector<std::string> invalid_inputs() override;
+
+   std::vector<std::shared_ptr<IAction>> get_subsequent_actions(std::vector<ActionConnection> connections) override;
+   std::vector<std::shared_ptr<IAction>> get_prior_actions(std::vector<ActionConnection> connections) override;
 
    virtual void run() = 0;
 

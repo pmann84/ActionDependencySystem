@@ -36,7 +36,31 @@ bool BaseAction::validate_inputs()
    bool validated = true;
    for (auto input : m_inputs)
    {
-      validated = validated && input->is_initialised();
+      if (!input->is_optional())
+      {
+         validated = validated && input->is_initialised();
+      }
+   }
+   return validated;
+}
+
+bool BaseAction::validate_optional_inputs(std::vector<ActionConnection> connections)
+{
+   bool validated = true;
+
+   for (int i = 0; i < m_inputs.size(); ++i)
+   {
+      auto& input = m_inputs[i];
+      if (input->is_optional())
+      {
+         for (auto connection : connections)
+         {
+            if (connection.dst_action()->name() == m_name && connection.dst_input_idx() == i)
+            {
+               validated = validated && input->is_initialised();
+            }
+         }
+      }
    }
    return validated;
 }
@@ -52,4 +76,38 @@ std::vector<std::string> BaseAction::invalid_inputs()
       }
    }
    return invalid_inputs;
+}
+
+std::vector<std::shared_ptr<IAction>> BaseAction::get_subsequent_actions(std::vector<ActionConnection> connections)
+{
+   std::vector<std::shared_ptr<IAction>> connected_actions;
+   if (!connections.empty())
+   {
+      for (auto action_connection : connections)
+      {
+         std::shared_ptr<IAction> dst_action = action_connection.dst_action();
+         if (dst_action.get() != this)
+         {
+            connected_actions.push_back(dst_action);
+         }
+      }
+   }
+   return connected_actions;
+}
+
+std::vector<std::shared_ptr<IAction>> BaseAction::get_prior_actions(std::vector<ActionConnection> connections)
+{
+   std::vector<std::shared_ptr<IAction>> connected_actions;
+   if (!connections.empty())
+   {
+      for (auto action_connection : connections)
+      {
+         std::shared_ptr<IAction> src_action = action_connection.src_action();
+         if (src_action.get() != this)
+         {
+            connected_actions.push_back(src_action);
+         }
+      }
+   }
+   return connected_actions;
 }

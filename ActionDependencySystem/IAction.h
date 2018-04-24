@@ -7,6 +7,8 @@
 #include <vector>
 #include <memory>
 
+class ActionConnection;
+
 class IAction
 {
 public:
@@ -21,7 +23,11 @@ public:
    virtual std::shared_ptr<ActionInput> get_output(const int i) = 0;
 
    virtual bool validate_inputs() = 0;
+   virtual bool validate_optional_inputs(std::vector<ActionConnection>) = 0;
    virtual std::vector<std::string> invalid_inputs() = 0;
+
+   virtual std::vector<std::shared_ptr<IAction>> get_subsequent_actions(std::vector<ActionConnection> connections) = 0;
+   virtual std::vector<std::shared_ptr<IAction>> get_prior_actions(std::vector<ActionConnection> connections) = 0;
 
    virtual void run() = 0;
 };

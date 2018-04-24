@@ -73,7 +73,7 @@
     <ClCompile Include="LocalActionGraph.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ParallelActionGraph.cpp" />
-    <ClCompile Include="SortUtils.cpp" />
+    <ClCompile Include="ThreadPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActionConnection.h" />
@@ -88,6 +88,7 @@
     <ClInclude Include="LocalActionGraph.h" />
     <ClInclude Include="ParallelActionGraph.h" />
     <ClInclude Include="SortUtils.h" />
+    <ClInclude Include="ThreadPool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

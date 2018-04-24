@@ -2,6 +2,7 @@
 #define __PARALLEL_ACTION_GRAPH__
 
 #include "BaseActionGraph.h"
+#include <mutex>
 
 class ParallelActionGraph : public BaseActionGraph
 {
@@ -12,7 +13,7 @@ public:
    void run() override;
 
 private:
-   unsigned int m_max_threads;
+   std::mutex m_dag_mutex;
 };
 
 #endif // __PARALLEL_ACTION_GRAPH__

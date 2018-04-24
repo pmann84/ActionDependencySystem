@@ -40,7 +40,7 @@ void CopyFileAction::run()
 
    std::cout << "Copying " << input_file_name << " to " << output_file_name << std::endl;
 
-   std::experimental::filesystem::copy_options copy_options = std::experimental::filesystem::copy_options::overwrite_existing;
+   const std::experimental::filesystem::copy_options copy_options = std::experimental::filesystem::copy_options::overwrite_existing;
    std::experimental::filesystem::copy(input_file_name, output_file_name, copy_options); // copy file
 
    std::cout << "Copy to " << output_file_name << " complete!" << std::endl;

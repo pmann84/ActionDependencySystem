@@ -25,6 +25,14 @@ void BaseActionGraph::add_action(std::shared_ptr<IAction> action)
    m_degree_map[action] = std::make_pair(0, 0);
 }
 
+void BaseActionGraph::add_actions(std::vector<std::shared_ptr<IAction>> actions)
+{
+   for (auto& action : actions)
+   {
+      add_action(action);
+   }
+}
+
 void BaseActionGraph::add_connection(std::shared_ptr<IAction> src, int output_idx, std::shared_ptr<IAction> dst, int input_idx)
 {
    // Check that both src and dst actions exist in the dag
@@ -55,4 +63,18 @@ void BaseActionGraph::add_connection(std::shared_ptr<IAction> src, int output_id
    m_dag.at(dst).push_back(connection);
    m_degree_map.at(src).second++;
    m_degree_map.at(dst).first++;
+}
+
+void BaseActionGraph::propagate_outputs(std::shared_ptr<IAction> action)
+{
+   for (auto connection : m_dag[action])
+   {
+      if (connection.is_src(action))
+      {
+         // Get the src action and the appropriate output
+         std::shared_ptr<IAction> dst = connection.dst_action();
+         std::any output_value = action->get_output(connection.src_output_idx())->get();
+         dst->set_input(connection.dst_input_idx(), output_value);
+      }
+   }
 }
