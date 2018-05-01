@@ -60,7 +60,7 @@ void ThreadPool::work_func()
       {
          std::unique_lock<std::mutex> lock(m_queue_mutex);
          m_condition.wait(lock, [&]() { return m_stop || !m_tasks.empty(); });
-         // Loop over the tasks here and see if there are any we can start
+         // Loop over the tasks here and see if there are any we can start - MOVE THIS LOOP OUT TO THE GRAPH CLASS AND LET THE GRAPH CLASS HANDLE WHEN TO ADD THE ACTIONS TO THE THREAD POOL. THAT WAY THE THREAD POOL ONLY NEEDS TO RUN FUNCTIONS AND RETURN FUTURES. THE GRAPH CLASS CAN THEN CHECK OUTPUTS ETC AND DETERMINE INPUTS, AND THEN QUEUE MORE UP WHEN WE HAVE RESPONSES BACK. 
          for (auto task : m_tasks)
          {
             if (m_validate_action(task))
