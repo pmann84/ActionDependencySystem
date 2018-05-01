@@ -28,10 +28,23 @@ void ParallelActionGraph::run()
       };
 
    // Start thread pool
-   ThreadPool pool(post_run_action, action_validate_function, 2);
-   pool.add_jobs(sorted_actions);
-   // Wait for all the jobs to finish!
-   pool.wait();
+   std::vector<std::future<void>> results;
+   ThreadPool pool(2);
+   results.push_back(pool.add_job([]() { std::cout << "Sleeping for 5 seconds..." << std::endl; std::this_thread::sleep_for(std::chrono::seconds(5)); std::cout << "Completed Sleeping for 5 seconds!" << std::endl; }));
+   results.push_back(pool.add_job([]() { std::cout << "Sleeping for 4 seconds..." << std::endl; std::this_thread::sleep_for(std::chrono::seconds(4)); std::cout << "Completed Sleeping for 4 seconds!" << std::endl; }));
+   results.push_back(pool.add_job([]() { std::cout << "Sleeping for 2 seconds..." << std::endl; std::this_thread::sleep_for(std::chrono::seconds(2)); std::cout << "Completed Sleeping for 2 seconds!" << std::endl; }));
+   results.push_back(pool.add_job([]() { std::cout << "Sleeping for 1 seconds..." << std::endl; std::this_thread::sleep_for(std::chrono::seconds(1)); std::cout << "Completed Sleeping for 1 seconds!" << std::endl; }));
+   
+   // Wait on the threads
+   for (auto it = results.rbegin(); it != results.rend(); ++it)
+   {
+      it->get();
+   }
+   //ThreadPool pool(post_run_action, action_validate_function, 2);
+   //pool.add_jobs(sorted_actions);
+   //// Wait for all the jobs to finish!
+   //pool.wait();
+
    // Graph executed!
    std::cout << "Graph [" << name() << "] finished executing!" << std::endl;
 }
