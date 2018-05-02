@@ -5,27 +5,26 @@
 
 #include <functional>
 #include <condition_variable>
+#include <future>
+#include <queue>
 
 class ThreadPool
 {
 public:
-   ThreadPool(std::function<void(std::shared_ptr<IAction>)>, std::function<bool(std::shared_ptr<IAction>)>, unsigned int);
+   ThreadPool(const unsigned int num_threads = 0);
    ~ThreadPool();
-
-   void add_jobs(std::vector<std::shared_ptr<IAction>>);
-   void wait() const;
+   // For now we can only add void fns with no args, could expand to arbitrary functions - investigate std::result_of
+   std::future<void> add_job(std::function<void()>);
 
 private:
-   void work_func();
+   void main_thread_loop();
 
    std::mutex m_queue_mutex;
    unsigned int m_max_threads;
    bool m_stop;
-   std::vector<std::shared_ptr<IAction>> m_tasks;
+   std::queue<std::function<void()>> m_tasks;
    std::vector<std::thread> m_workers;
    std::condition_variable m_condition;
-   std::function<void(std::shared_ptr<IAction>)> m_post_action_run;
-   std::function<bool(std::shared_ptr<IAction>)> m_validate_action;
 };
 
 #endif // __THREAD_POOL_H__
