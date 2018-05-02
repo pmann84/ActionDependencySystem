@@ -20,7 +20,6 @@ private:
    void main_thread_loop();
 
    std::mutex m_queue_mutex;
-   unsigned int m_max_threads;
    bool m_stop;
    std::queue<std::function<void()>> m_tasks;
    std::vector<std::thread> m_workers;

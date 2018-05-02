@@ -23,6 +23,7 @@
 #include "Actions/CopyFileAction.h"
 #include "Actions/RunPowerShellScriptAction.h"
 #include "Actions/DelayAction.h"
+#include "ThreadPool.h"
 
 void RunSerialisedTestGraphSimple()
 {
@@ -117,11 +118,18 @@ void RunParallelTestGraphWithOptionalInputs()
    graph.run();
 }
 
+void ThreadPoolNoItemsTest()
+{
+   ThreadPool pool;
+   std::this_thread::sleep_for(std::chrono::seconds(50));
+}
+
 int main()
 {
    //RunSerialisedTestGraphSimple();
    //RunParallelisedTestGraphSimple();
    //RunSerialisedTestGraphWithOptionalInputs();
    RunParallelTestGraphWithOptionalInputs();
+   //ThreadPoolNoItemsTest();
    return 0;
 }
