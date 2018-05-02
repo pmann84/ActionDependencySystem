@@ -8,29 +8,16 @@
 #include <future>
 #include <queue>
 
-class IThreadPool
+class ThreadPool
 {
 public:
-   virtual ~IThreadPool() {};
+   ThreadPool(const unsigned int num_threads = 0);
+   ~ThreadPool();
    // For now we can only add void fns with no args, could expand to arbitrary functions - investigate std::result_of
-   virtual std::future<void> add_job(std::function<void()>) = 0;
+   std::future<void> add_job(std::function<void()>);
 
 private:
-   virtual void main_thread_loop() = 0;
-};
-
-class ThreadPool : public IThreadPool
-{
-public:
-   //ThreadPool(std::function<void(std::shared_ptr<IAction>)>, std::function<bool(std::shared_ptr<IAction>)>, unsigned int);
-   ThreadPool(unsigned int);
-   ~ThreadPool() override;
-
-   std::future<void> add_job(std::function<void()>) override;
-   //void wait() const;
-
-private:
-   void main_thread_loop() override;
+   void main_thread_loop();
 
    std::mutex m_queue_mutex;
    unsigned int m_max_threads;
@@ -38,8 +25,6 @@ private:
    std::queue<std::function<void()>> m_tasks;
    std::vector<std::thread> m_workers;
    std::condition_variable m_condition;
-   //std::function<void(std::shared_ptr<IAction>)> m_post_action_run;
-   //std::function<bool(std::shared_ptr<IAction>)> m_validate_action;
 };
 
 #endif // __THREAD_POOL_H__
