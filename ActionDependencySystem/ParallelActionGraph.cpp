@@ -1,8 +1,8 @@
 #include "ParallelActionGraph.h"
 
-#include "SortUtils.h"
-
 #include <iostream>
+
+#include "SortUtils.h"
 #include "ThreadPool.h"
 
 ParallelActionGraph::ParallelActionGraph()

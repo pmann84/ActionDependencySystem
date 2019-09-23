@@ -1,14 +1,13 @@
 #ifndef __THREAD_POOL_H__
 #define __THREAD_POOL_H__
 
-#include "IAction.h"
+#include "ActionDependencySystemCore.h"
 
 #include <functional>
-#include <condition_variable>
 #include <future>
 #include <queue>
 
-class ThreadPool
+class ACTION_DEPENDENCY_SYSTEM_API ThreadPool
 {
 public:
    ThreadPool(const unsigned int num_threads = 0);

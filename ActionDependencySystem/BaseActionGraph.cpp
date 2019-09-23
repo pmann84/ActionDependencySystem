@@ -1,6 +1,8 @@
 #include "BaseActionGraph.h"
+
 #include <algorithm>
 #include <sstream>
+
 #include "ActionExceptions.h"
 
 BaseActionGraph::BaseActionGraph()

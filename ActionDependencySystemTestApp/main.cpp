@@ -1,14 +1,15 @@
-/* 
+/*
  * Action Registration
  * Should there be some system to register actions? Possibly not, could consider a Houdini style dso registration system?
- * 
+ *
+ * TODO: Use spdlog?
  * TODO: Implement serialisation to text file
  *    This requires we have the serialise an action so that it has the * type, * name, * list of inputs, * list of outputs
  * TODO: Implement command line interface to execute serialised graphs
  * TODO: Add action registration system
  * TODO: Add graph ui
  * TODO: Test with more actions and more complicated graphs
- * TODO: Improve interface to the graph? so its more fluent 
+ * TODO: Improve interface to the graph? so its more fluent
  * TODO: Implement ForEach action
  * TODO: Add checks in add_connection (? maybe?) to check for loops in the graph!
  * TODO: Need to add/test functionality to be able to add inputs and outputs to graphs
@@ -18,8 +19,7 @@
  * TODO: Add timing features in the graphs
  */
 
-#include "LocalActionGraph.h"
-#include "ParallelActionGraph.h"
+#include "ActionDependencySystem.h"
 #include "Actions/CopyFileAction.h"
 #include "Actions/RunPowerShellScriptAction.h"
 #include "Actions/DelayAction.h"
@@ -82,7 +82,7 @@ void thread_pool_no_items_test()
 
 int main()
 {
-   //run_test_graph_simple<LocalActionGraph>();
+   run_test_graph_simple<LocalActionGraph>();
    //run_test_graph_simple<ParallelActionGraph>();
    //run_test_graph_with_optional_inputs<LocalActionGraph>();
    //run_test_graph_with_optional_inputs<ParallelActionGraph>();   

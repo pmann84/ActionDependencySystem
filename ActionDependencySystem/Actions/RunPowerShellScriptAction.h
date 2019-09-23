@@ -5,7 +5,7 @@
 
 #include <string>
 
-class RunPowershellScriptAction : public BaseAction
+class ACTION_DEPENDENCY_SYSTEM_API RunPowershellScriptAction : public BaseAction
 {
 public:
    RunPowershellScriptAction();

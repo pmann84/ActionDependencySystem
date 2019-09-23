@@ -4,7 +4,7 @@
 #include <string>
 #include "../BaseAction.h"
 
-class DelayAction : public BaseAction
+class ACTION_DEPENDENCY_SYSTEM_API DelayAction : public BaseAction
 {
 public:
    DelayAction();

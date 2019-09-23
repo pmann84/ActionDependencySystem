@@ -9,7 +9,7 @@ ThreadPool::ThreadPool(const unsigned int num_threads) : m_stop(false)
    const unsigned int max_threads = num_threads == 0 ? (hardware_threads != 0 ? hardware_threads : 2) : num_threads;
    std::cout << "Starting Thread Pool..." << std::endl;
    std::cout << "Max threads available: " << max_threads << std::endl;
-   for (int i = 0; i < max_threads; ++i)
+   for (unsigned int i = 0; i < max_threads; ++i)
    {
       m_workers.push_back(std::thread(std::bind(&ThreadPool::main_thread_loop, this)));
    }

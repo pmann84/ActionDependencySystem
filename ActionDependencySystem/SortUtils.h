@@ -29,7 +29,6 @@ namespace SortUtils
       }
 
       // Recur for all connected actions i.e. iterate over destination actions in associated ActionConnections
-      std::vector<std::shared_ptr<IAction>>::iterator it;
       for (const auto connected_action : connected_actions)
       {
          if (!visited[connected_action])
@@ -51,7 +50,7 @@ namespace SortUtils
       // Sort starting from all vertices one by one
       for (auto action : dag)
       {
-         if (visited[action.first] == false)
+         if (!visited[action.first])
          {
             SortUtils::topological_sort_connected_actions(dag, action.first, visited, output_iterator);
          }

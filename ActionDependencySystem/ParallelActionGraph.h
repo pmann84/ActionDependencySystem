@@ -1,10 +1,12 @@
 #ifndef __PARALLEL_ACTION_GRAPH__
 #define __PARALLEL_ACTION_GRAPH__
 
-#include "BaseActionGraph.h"
 #include <mutex>
 
-class ParallelActionGraph : public BaseActionGraph
+#include "ActionDependencySystemCore.h"
+#include "BaseActionGraph.h"
+
+class ACTION_DEPENDENCY_SYSTEM_API ParallelActionGraph : public BaseActionGraph
 {
 public:
    ParallelActionGraph();

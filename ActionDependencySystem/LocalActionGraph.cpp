@@ -1,12 +1,11 @@
 #include "LocalActionGraph.h"
 
 #include <iostream>
+#include <iterator>
 #include <sstream>
-#include <stack>
+
 #include "ActionExceptions.h"
 #include "SortUtils.h"
-#include <iterator>
-#include <algorithm>
 
 void LocalActionGraph::run()
 {

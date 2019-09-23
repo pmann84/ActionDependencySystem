@@ -5,7 +5,7 @@
 
 #include <string>
 
-class CopyFileAction : public BaseAction
+class ACTION_DEPENDENCY_SYSTEM_API CopyFileAction : public BaseAction
 {
 public:
    CopyFileAction();

@@ -1,10 +1,11 @@
 #ifndef __BASE_ACTION_H__
 #define __BASE_ACTION_H__
 
-#include "IAction.h"
 #include "ActionConnection.h"
+#include "ActionDependencySystemCore.h"
+#include "IAction.h"
 
-class BaseAction : public IAction
+class ACTION_DEPENDENCY_SYSTEM_API BaseAction : public IAction
 {
 public:
    BaseAction();
@@ -12,9 +13,6 @@ public:
 
    std::string name() const override { return m_name; };
    void name(std::string) override;
-
-   void add_input(std::shared_ptr<ActionInput>) override;
-   void add_output(std::shared_ptr<ActionInput>) override;
    
    void set_input(int i, std::any value) override;
    std::shared_ptr<ActionInput> get_output(const int i) override;
@@ -24,15 +22,18 @@ public:
 
    std::vector<std::string> invalid_inputs() override;
 
-   std::vector<std::shared_ptr<IAction>> get_subsequent_actions(std::vector<ActionConnection> connections) override;
-   std::vector<std::shared_ptr<IAction>> get_prior_actions(std::vector<ActionConnection> connections) override;
-
-   virtual void run() = 0;
+   virtual void run() override = 0;
 
 protected:
    std::string m_name;
    ActionInputListT m_inputs;
    ActionInputListT m_outputs;
+
+   void add_input(std::shared_ptr<ActionInput>);
+   void add_output(std::shared_ptr<ActionInput>);
+
+   std::vector<std::shared_ptr<IAction>> get_subsequent_actions(std::vector<ActionConnection> connections);
+   std::vector<std::shared_ptr<IAction>> get_prior_actions(std::vector<ActionConnection> connections);
 };
 
 #endif // __IACTION_H__

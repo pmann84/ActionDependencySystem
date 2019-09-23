@@ -3,26 +3,27 @@
 
 #include <map>
 
-#include "BaseAction.h"
 #include "ActionConnection.h"
+#include "ActionDependencySystemCore.h"
+#include "BaseAction.h"
 
 using ActionDagT = std::map<std::shared_ptr<IAction>, std::vector<ActionConnection>>;
 // Map of { action : <indegree, outdegree> }
 using DagDegreeMapT = std::map<std::shared_ptr<IAction>, std::pair<unsigned int, unsigned int>>;
 
-class BaseActionGraph : public BaseAction
+class ACTION_DEPENDENCY_SYSTEM_API BaseActionGraph : public BaseAction
 {
 public:
    BaseActionGraph();
    ~BaseActionGraph() override = default;
 
-   virtual void run() = 0;
+   virtual void run() override = 0;
 
    void add_action(std::shared_ptr<IAction>);
    void add_actions(std::vector<std::shared_ptr<IAction>>);
    void add_connection(std::shared_ptr<IAction>, int, std::shared_ptr<IAction>, int);
    void propagate_outputs(std::shared_ptr<IAction>);
-   int size() { return m_dag.size(); }
+   size_t size() const { return m_dag.size(); }
 
 protected:
    ActionDagT m_dag;
